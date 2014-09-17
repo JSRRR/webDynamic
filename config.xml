@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/webDynamic" version="1.0.0" viewmodes="maximized">
+    <access origin="http://googleapis.com" subdomains="true"></access>
+    <access origin="http://gstatic.com" subdomains="true"></access>
+    <access origin="http://google.com" subdomains="true"></access>
+    <tizen:app-widget id="6djwk3q2OU.webDynamic.default" primary="true" auto-launch="false">
+        <tizen:box-label xml:lang="ko-kr">YouI</tizen:box-label>
+        <tizen:box-icon src="icon.png"/>
+        <tizen:box-content src="box/index.html" mouse-event="true" touch-effect="true">
+            <tizen:box-size use-decoration="true">1x1</tizen:box-size>
+            <tizen:box-size use-decoration="true">2x1</tizen:box-size>
+            <tizen:box-size use-decoration="true">2x2</tizen:box-size>
+            <tizen:pd src="pd/index.html" width="720" height="380"/>
+        </tizen:box-content>
+    </tizen:app-widget>
+    <tizen:application id="6djwk3q2OU.webDynamic" package="6djwk3q2OU" required_version="1.0"/>
+    <feature name="http://tizen.org/feature/screen.size.normal.720.1280"/>
+    <icon src="icon.png"/>
+    <name>YouI</name>
+    <tizen:privilege name="http://tizen.org/privilege/http"/>
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:setting screen-orientation="portrait" context-menu="enable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+</widget>

@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Web Dynamic Box</title>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+            if (typeof window.appwidget != 'undefined') {
+                listenPdMessage();
+            } else {
+                window.addEventListener("appwidgetready", onAppWidgetReady, false);
+                console.log("appwidgetready event is registered");
+            }
+
+            function onAppWidgetReady() {
+                console.log("appwidgetready event is fired");
+                listenPdMessage();
+            }
+
+            function listenPdMessage() {
+                window.addEventListener("pdmessage",
+                function(e) {
+                    console.log("pdmessage event is fired");
+                    
+                    $('body').css('background-color','red');
+                    
+                    document.getElementById("fromPd").innerHTML += unescape(e) + "<br>";
+                    window.appwidget.sendMessageToPd("안녕, Drop View");
+                }, false);
+            }
+        </script>
+
+</head>
+<body bgcolor="#99CCFF" text="#FFFFFF">
+	<div id="demo">너뭐해!</div>
+	<div id="fromPd"></div>
+
+
+<script>
+    var i=0;
+   
+    $('#demo').append('<p style="width:175px; height: 175px; color:red; border:1px solid #000;">asd</p>');
+    
+    	$('body').click(function(){
+    		$('body').css('background-color','red').text('콕 찔러볼게요!');
+    		navigator.vibrate(300);
+    		w.send('cock');
+    	});
+    </script>
+
+<script type="text/javascript">
+    var log = function(s) {
+        console.log(s);
+        if (document.readyState !== "complete") {
+            log.buffer.push(s);
+        } else {
+            //document.getElementById("output").innerHTML += (s + "\n")
+            $('#output').append('<div>'+s+'</div>').after(function(){
+            });
+        }
+    }
+    log.buffer = [];
+ 
+    url = "ws://210.118.34.15:3030";
+    w = new WebSocket(url);
+ 
+    w.onopen = function() {
+        //log("open");
+        w.send("찌르기 ..");
+    }
+ 
+    w.onmessage = function(e) {
+	    if(e.data == 'cock'){
+	    	navigator.vibrate(300);
+	    }else{
+	        console.log(e.data);
+	        log(e.data);
+	    }
+	 }
+    w.onclose = function(e) {
+        log("closed");
+    }
+ 
+</script>
+
+</body></html>

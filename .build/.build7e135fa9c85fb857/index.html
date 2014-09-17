@@ -1,0 +1,96 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<meta name="description" content="Tizen Web Application" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script>
+	document.addEventListener('tizenhwkey', function(e) {
+		if (e.keyName == "back") {
+			tizen.application.getCurrentApplication().exit();
+		}
+	});
+</script>
+<style type="text/css">
+	html,body{
+		padding: 0;
+		margin: 0;
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
+	body{
+		background-image: url("img/back.png");
+	}
+	.outer{
+		height: inherit;
+		text-align: center;
+	}
+	.input_text{
+		border: 1px solid #fff;
+		width: 85%;
+		height: 50px;
+		margin: 5px;
+		background-color: #c74145;
+		color : white;
+		font-size: 35px;
+		 -webkit-border-top-left-radius:10px;
+   -webkit-border-top-right-radius:10px;
+   -webkit-border-bottom-left-radius:10px;
+   -webkit-border-bottom-right-radius:10px;
+	}
+	
+	.button{
+		border: 0px;
+		width: 100px;
+		height: 50px;
+		background-color: transparent;
+		color: #fff;
+		font-size: 20px;
+	}
+	#logo{
+	margin-top: 10px;
+	}
+</style>
+<title>Tizen Web IDE - Tizen - Dynamic box sample</title>
+</head>
+<body>
+	<div class="outer">
+		<div id="logo"><img src="img/3.jpg" style="width: 200px; height:  200px;" /></div>
+		<div>
+		
+		<div><br /><br /><br />
+			<img class="a" src="img/m.jpg" />
+			<img class="a" src="img/1.jpg" style="width: 100px; height:  70px;" /><br />
+			<input type="text" class="input_text" id="input_id" style="position: absolute; left: 85px; top:280px; z-index: -1;" /><br /><br /><br />
+			<img class="a" src="img/2.jpg" style="width: 100px; height:  70px;" />
+			<img class="a" src="img/g.jpg" />
+			<input type="text" class="input_text" id="input_other_id" style="position: absolute; left: -30px; top:408px; z-index:-1;" />
+		</div>
+		<div>
+			<button style="display: none;" class="button" id="start">시작하기</button>
+		</div>
+	</div>
+ 
+<script type="text/javascript">
+var name = localStorage.getItem('name');
+var othername = localStorage.getItem('othername');
+if(name==null|| name == 'null'){
+	$('#start').click(function(){
+		localStorage.setItem('name', $('#input_id').val());
+		localStorage.setItem('othername', $('#input_other_id').val());
+		location.href = 'main.html';
+	});
+}else{
+	location.href = 'main.html';
+	
+}
+$('.a').click(function(){
+	$('.a').fadeOut(500).after(function(){
+		$('.button').fadeIn(500);
+		$('input').css('z-index',100);
+	});
+	
+});	
+</script>
+
+</div></body></html>

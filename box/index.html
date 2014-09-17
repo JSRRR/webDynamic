@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Web Dynamic Box</title>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<style type="text/css">
+html,body{
+	padding:0;
+	margin:0;
+}
+#demo {
+	width: 90px;
+	height: 90px;
+	background-image: url("../img/profile.png");
+	background-size: 175px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+#status {
+	width: 50px;
+	height: 50px;
+	background: url(../img/status.png);
+	left: 90px;
+	top: 0px;
+	position: absolute;
+	padding : 20px;
+}
+
+#chatLatest {
+	width: 180px;
+	height: 90px;
+	left: 0px;
+	top: 90px;
+	background: #1f2020;
+	position: absolute;
+}
+
+#dDay {
+	width: 180px;
+	height: 180px;
+	left: 0px;
+	top: 90px;
+	background: url(../img/dDay.png);
+	position: absolute;
+	opacity: 0;
+	z-index: 1;
+}
+
+#border {
+	width: 167px;
+	height: 1.5px;
+	top: 45px;
+	left: 5px;
+	background: #919191;
+	position: absolute;
+	z-index: 1;
+}
+
+#dynamic_message1 {
+	width: 167px;
+	height: 40px;
+	top: 3px;
+	left: 5px;
+	position: absolute;
+}
+
+#dynamic_message2 {
+	width: 167px;
+	height: 40px;
+	top: 48px;
+	left: 5px;
+	position: absolute;
+}
+</style>
+<script>
+	if (typeof window.appwidget != 'undefined') {
+		listenPdMessage();
+	} else {
+		window.addEventListener("appwidgetready", onAppWidgetReady, false);
+		console.log("appwidgetready event is registered");
+	}
+
+	function onAppWidgetReady() {
+		console.log("appwidgetready event is fired");
+		listenPdMessage();
+	}
+
+	function listenPdMessage() {
+		window.addEventListener("pdmessage",
+				function(e) {
+					console.log('wow!');
+					$('#dDay').animate({
+						'opacity' : 1
+					}, 1500);
+					$('#chatLatest').animate({
+						'opacity' : 0
+					}, 1500);
+
+					console.log("pdmessage event is fired");
+					document.getElementById("fromPd").innerHTML += unescape(e)
+							+ "<br>";
+					window.appwidget.sendMessageToPd("Hello, Drop View");
+				}, false);
+	}
+</script>
+
+</head>
+<body bgcolor="#99CCFF" text="#FFFFFF">
+	<div id="demo"></div>
+	<div id='status'>i am happy!! :-)</div>
+	<div id="chatLatest">
+		<div id='dynamic_message1'>어플을 실행시켜 </div>
+		<div id='border'></div>
+		<div id='dynamic_message2'>커플을 등록하세요.</div>
+	</div>
+	<div id="dDay">Day-150</div>
+	<div id="fromPd"></div>
+</body>
+
+<script>
+var item;
+var logStack = new Array();
+	$('body').click(function() {
+		if(localStorage.getItem('othername')==null || localStorage.getItem('othername')==''){
+			tizen.application.launch('6djwk3q2OU.webDynamic');
+		}else{
+			$('body').append('<div class="popupmsg" style="padding:40%; font-size:30px; width:100%; height:100%; background-color: black; opacity:0.7; position:absolute; ">콕!</div>');
+			setTimeout(function(){
+				$('.popupmsg').remove();
+			},1000);
+			item.type='cock';
+   			w.send(JSON.stringify(item));
+		}
+		
+	});
+	$('body').resize(function() {
+		console.log('hi');
+	});
+	
+	console.log($('#demo').css('width'));
+	console.log($('#status').css('width'));
+	
+	var log = function(s) {
+        console.log(s);
+        if (document.readyState !== "complete") {
+            log.buffer.push(s);
+        } else {
+            //document.getElementById("output").innerHTML += (s + "\n")
+        }
+    }
+    log.buffer = [];
+ 
+    url = "ws://210.118.34.15:3030";
+    w = new WebSocket(url);
+ 
+ 	if(localStorage.getItem('othername')==null || localStorage.getItem('othername')==''){
+
+	}else{
+		item = { name : localStorage.getItem('name'), msg : "login", type: "setting", other: localStorage.getItem('othername')};
+		w.onopen = function() {
+	        w.send(JSON.stringify(item));
+	    }
+	    
+	    
+	}
+	 	
+ 
+    w.onmessage = function(e) {
+    	var str = JSON.parse(e.data);
+		logStack.push(str);
+		localStorage.setItem('log',logStack);
+		
+		if(str.type == "cock"){
+			console.log('cock : ' + str.name);
+			console.log('othername : ' + localStorage.getItem('othername'));
+			if(str.name == localStorage.getItem('othername')){
+				navigator.vibrate(300);
+			}
+		}
+		if(str.type == "pic"){
+			console.log('pic : ' + str.msg);
+			console.log('othername : ' + localStorage.getItem('othername'));
+			if(str.name == localStorage.getItem('othername')){
+				navigator.vibrate(300);
+				$('#status').empty();
+				$('#status').css('background-image','url(../'+str.msg+')');
+				$('#status').css('background-size','100%');	
+			}
+		}
+	    
+	    else if(str.name == localStorage.getItem('othername')){
+	    	$('#dynamic_message1').html('너 : ' + str.msg);
+		}else if( str.name == localStorage.getItem('name')){
+			$('#dynamic_message2').html('나 : ' + str.msg);
+		}
+	 }
+    w.onclose = function(e) {
+        log("closed");
+    }
+</script>
+</html>

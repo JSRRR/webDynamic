@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Drop View</title>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+	if (typeof window.appwidget != 'undefined') {
+		listenBoxMessage();
+	} else {
+		window.addEventListener("appwidgetready", onAppWidgetReady, false);
+		console.log("appwidgetready event is registered");
+	}
+
+	function onAppWidgetReady() {
+		console.log("appwidgetready event is fired");
+		window.appwidget.sendMessageToBox("Hello, Dynamic Box");
+		listenBoxMessage();
+	}
+
+	function listenBoxMessage() {
+		window.addEventListener("boxmessage", function(e) {
+			document.getElementById("fromBox").innerHTML += unescape(e)
+					+ '<br>';
+		}, false);
+	}
+
+	function send() {
+		navigator.vibrate(300);
+		//window.appwidget.sendMessageToBox("안녕, Dynamic Box");
+	}
+</script>
+<style>
+* {
+	-webkit-user-select: none;
+	-user-select: none;
+}
+/*size max 360*190*/
+#fromBox {
+	width: 360px;
+	height: 190px;
+	position: absolute;
+	background: #1f2020;
+	top: 0px;
+	left: 0px;
+}
+
+.line {
+	width: 45px;
+	height: 1px;
+	right: 2.5px;
+	background: #252525;
+	position: absolute;
+}
+
+#chat {
+	width: 50px;
+	height: 63px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	background: white;
+	background-image: url(../img/chat.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 30px 30px;
+}
+
+#line1 {
+	top: 63px;
+}
+
+#gps {
+	width: 50px;
+	height: 63px;
+	position: absolute;
+	right: 0px;
+	top: 63px;
+	background: white;
+	background-image: url(../img/gps.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#line2 {
+	top: 126px;
+}
+
+#app {
+	width: 50px;
+	height: 65px;
+	position: absolute;
+	right: 0px;
+	top: 126px;
+	background: white;
+	background-image: url(../img/app.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+</style>
+</head>
+<body>
+	<!--<input type="button" value="Call" onclick="send()" style="width:50px; height: 50px;"/>-->
+	<div id="fromBox"></div>
+	<div id="chat"></div>
+	<div id="gps"></div>
+	<div id="app"></div>
+	<div id="line1" class="line"></div>
+	<div id="line2" class="line"></div>
+
+</body></html>

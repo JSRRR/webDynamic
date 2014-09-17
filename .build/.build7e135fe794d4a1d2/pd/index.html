@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Drop View</title>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script>
+   if (typeof window.appwidget != 'undefined') {
+      listenBoxMessage();
+   } else {
+      window.addEventListener("appwidgetready", onAppWidgetReady, false);
+      console.log("appwidgetready event is registered");
+   }
+
+   function onAppWidgetReady() {
+      console.log("appwidgetready event is fired");
+      window.appwidget.sendMessageToBox("Hello, Dynamic Box");
+      listenBoxMessage();
+   }
+
+   function listenBoxMessage() {
+      window.addEventListener("boxmessage", function(e) {
+         document.getElementById("fromBox").innerHTML += unescape(e)
+               + '<br>';
+      }, false);
+   }
+
+   function send() {
+      navigator.vibrate(300);
+      //window.appwidget.sendMessageToBox("안녕, Dynamic Box");
+   }
+</script>
+<style>
+* {
+   -webkit-user-select: none;
+   -user-select: none;
+}
+/*size max 360*190*/
+#fromBox {
+   width: 280px;
+   height: 190px;
+   position: absolute;
+   background: white;
+   top: 0px;
+   left: 0px;
+   -webkit-border-top-left-radius:0px;
+   -webkit-border-top-right-radius:15px;
+   -webkit-border-bottom-left-radius:0px;
+   -webkit-border-bottom-right-radius:15px;
+}
+
+#gpsBox {
+   width: 280px;
+   height: 190px;
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   overflow: auto;
+   opacity: 0;
+   -webkit-border-top-left-radius:0px;
+   -webkit-border-top-right-radius:15px;
+   -webkit-border-bottom-left-radius:0px;
+   -webkit-border-bottom-right-radius:15px;
+   background: white;
+}
+
+#iconBack
+{
+   width:70px;
+   height: 190px;
+   position: absolute;
+   top: 0px;
+   right: 0px;
+   -webkit-border-top-left-radius:10px;
+   -webkit-border-top-right-radius:0px;
+   -webkit-border-bottom-left-radius:10px;
+   -webkit-border-bottom-right-radius:0px;
+   background: #212121;
+}
+
+#chat {
+   width: 50px;
+   height: 63px;
+   position: absolute;
+   right: 10px;
+   top: 0px;
+   background: #212121;
+   background-image: url(../img/chat2.png);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: 30px 30px;
+}
+#red
+{   width:4px;
+   height:63px;
+   background: #993333;
+   position: absolute;
+   top:0px;
+   right: 0px
+}
+
+#gps {
+   width: 50px;
+   height: 63px;
+   position: absolute;
+   right: 10px;
+   top: 63px;
+   background: #212121;
+   background-image: url(../img/gps2.png);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: 30px 40px;
+}
+
+#app {
+   width: 50px;
+   height: 65px;
+   position: absolute;
+   right: 10px;
+   top: 126px;
+   background: #212121;
+   background-image: url(../img/app2.png);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: 30px 20px;
+}
+</style>
+</head>
+<body>
+   <!--<input type="button" value="Call" onclick="send()" style="width:50px; height: 50px;"/>-->
+   <div id="fromBox"></div>
+   <div id="iconBack"></div>
+   <div id="gpsBox"><iframe src="../localeinfo.html" style="border: 0px; width: 100%; height: 100%;"></iframe></div>
+   <div id="chat"></div>
+   <div id="gps"></div>
+   <div id="app"></div>
+   <div id="red"></div>
+
+   
+   
+
+<script type="text/javascript">
+var logstack = new Array();
+if(localStorage.getItem('othername')==null || localStorage.getItem('othername')==''){
+			$('#fromBox').html('커플 등록부터 해주세요!');
+		} else{
+			logstack = localStorage.getItem('log');
+			console.log("logstack : " + logstack[477]);
+			//$('#fromBox').append(logstack.pop());
+		}
+		
+		
+	$('#gps').click(function(){
+      $('#red').animate({
+      'top':63},1000);
+      $('#fromBox').animate({
+         'opacity':0
+         },500);
+      $('#gpsBox').animate({
+         'opacity':1
+         },500);
+         
+        if(localStorage.getItem('othername')==null || localStorage.getItem('othername')==''){
+			$('#gpsBox').html('커플 등록부터 해주세요!');
+		} 
+      //$('#gpsBox').load("../localeinfo.html");
+
+   });
+   $('#chat').click(function(){
+      $('#red').animate({
+      'top':0},1000);
+      $('#gpsBox').animate({
+         'opacity':0
+         },500);
+      $('#fromBox').animate({
+         'opacity':1
+         },500);   
+         
+         if(localStorage.getItem('othername')==null || localStorage.getItem('othername')==''){
+			$('#fromBox').html('커플 등록부터 해주세요!');
+		} 
+   });
+   $('#app').click(function(){
+      $('#red').animate({
+         'top':126},1000,function(){
+            tizen.application.launch('6djwk3q2OU.webDynamic');
+         });
+   });
+   
+   
+   
+</script>
+</body></html>

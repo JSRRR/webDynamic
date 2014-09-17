@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <title>Drop View</title>
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script>
+            if (typeof window.appwidget != 'undefined') {
+                listenBoxMessage();
+            } else {
+                window.addEventListener("appwidgetready", onAppWidgetReady, false);
+                console.log("appwidgetready event is registered");
+            }
+
+            function onAppWidgetReady() {
+                console.log("appwidgetready event is fired");
+                listenBoxMessage();
+            }
+
+            function listenBoxMessage() {
+                window.addEventListener("boxmessage",
+                function(e) {
+                    document.getElementById("fromBox").innerHTML += unescape(e) + '<br>';
+                }, false);
+            }
+
+            function send () {
+            	navigator.vibrate(300);
+                window.appwidget.sendMessageToBox("안녕, Dynamic Box");
+            }
+        </script>
+        <style>
+            * {
+                -webkit-user-select: none;
+                -user-select: none;
+            }
+        </style>
+    </head>
+    <body bgcolor="#FF9966" text="#FFFFFF">
+        This is a Drop View.<br />A Drop View can control the Box.<br />
+        <input type="button" value="Call" onclick="send()" style="width:50px; height: 50px;" />
+        <div id="fromBox"></div>
+    
+
+</body></html>
